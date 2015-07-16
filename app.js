@@ -8,46 +8,47 @@ var bitwiseNQueens = function(n) {
     rowOptions.push(rowOption << i);
   }
 
-  console.log(rowOptions)
+  console.log('row options: ' + rowOptions) // [1,2,4,8]
 
   // initialize counter variable to 0
   var solutionCount = 0;
-  // declare recursive function expression
+  console.log('solution count: ' + solutionCount);
+
+  // recursive function expression
   var searchForSolutions = function(board) {
     // base case: board.length = n
+    // console.log('board length: ' + board.length);
     if(board.length === n) {
       // add 1 to solutionCount and break recursion
-      return solutionCount++;
+      solutionCount++;
+      return;
+      // console.log('solution count: ' + solutionCount);
     }
     /* initial edge case: empty board */
     if(board.length === 0){
+      // console.log('base case passing');
       for (var i = 0; i < rowOptions.length; i++) {
         var initialBoard = [rowOptions[i]];
+        console.log('initial board: ' + initialBoard)
         searchForSolutions(initialBoard);
-        console.log('for loop');
       }
     }
-    /* looping through potential next row */
+    // console.log(board);
+    /* looping through potential next row e.g. [1,2,4,8] */ 
     for (var j = 0; j < rowOptions.length; j++) {
-      /* testing against current board */
-      var boardLen = board.length
-      for (var k = boardLen; k >= 0; k--) {
-        
-        if(rowOptions[j] === board[k]){
-          console.log('equals');
-          return;
-        }
-        if(rowOptions[j] === board[k] >> boardLen - k) {
-          console.log('too much');
-          return;
-        }
-        if(rowOptions[j] === board[k] << boardLen - k) {
-          console.log('too little');
-          return;
+      /* testing against current board e.g. n = 1 [1], [2], [4], [8] */
+      // [8,1]
+      var boardLen = board.length; // 1
+      
+      for (var k = boardLen - 1; k >= 0; k--) {
+        if(rowOptions[j] === board[k] ||
+           rowOptions[j] === board[k] >> boardLen - k ||
+           rowOptions[j] === board[k] << boardLen - k) {
+             return; 
         }
       }
-      console.log(rowOptions[j])
       board.push(rowOptions[j]);
+      // console.log(board);
       searchForSolutions(board);
     }
   };
@@ -63,12 +64,3 @@ var bitwiseNQueens = function(n) {
 // call bitwiseNQueens
 
 bitwiseNQueens(4);
-
-/*
-
-2 [0,0,1,0] 0
-1 [0,0,0,1] 1
-8 [1,0,0,0] 2
-4 [0,1,0,0] 3?
-
-*/
