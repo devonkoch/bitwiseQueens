@@ -1,9 +1,8 @@
 var bitwiseNQueens = function(n) {
 
-  var firstOption = 1;
-  var rowOptions = [];
-  for(var i = 0; i < n; i++) {
-    rowOptions.push(firstOption << i);
+  var rowOptions = [1];
+  for(var i = 1; i < n; i++) {
+    rowOptions.push(rowOptions[i-1] << 1);
   }
 
   var solutionsCounter = 0;
