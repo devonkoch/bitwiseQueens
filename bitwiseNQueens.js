@@ -22,7 +22,7 @@ var bitwiseNQueens = function(n) {
 
     // recursion
     if(board.length > 0){
-      _.each(rowOptions, function(potentialRow){
+      _.each(rowOptions, function(potentialRow){  
 
         var failures = 0;
 
