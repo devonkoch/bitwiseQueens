@@ -1,11 +1,14 @@
 var bitwiseNQueens = function(n) {
     
+  var start = new Date();
 
   var firstOption = 1;
   var rowOptions = [];
   for(var i = 0; i < n; i++) {
     rowOptions.push(firstOption << i);
   }
+
+  // [1,2,4,8,16]
 
   // console.log('These are the row options: ' + rowOptions);
   
@@ -15,7 +18,7 @@ var bitwiseNQueens = function(n) {
     // base case
     if(board.length === n) {
       solutionsCounter++;
-      console.log('board: [' + board + '] is successfully populated, after adding 1, counter is now ' + solutionsCounter);
+      // console.log('board: [' + board + '] is successfully populated, after adding 1, counter is now ' + solutionsCounter);
       return;
     }
 
@@ -56,20 +59,14 @@ var bitwiseNQueens = function(n) {
             failures++;
             // console.log(potentialRow + ' failed on 2nd shift')
           }
-
-          // if(rowOptions[j] === board[k] || 
-          //    rowOptions[j] === (board[k] >> (board.length - k)) || 
-          //    rowOptions[j] === (board[k] << (board.length - k))) {
-          //   failures++;
-            // console.log('failed on: ' + board[k])
-          // }
-
         }
 
         if(failures === 0){
           // console.log('['+ board +'] passed test, add and recurse')
-          board[board.length] = rowOptions[j];
-          findSolutions(board);
+          var newRow = potentialRow;
+          var newBoard = board.slice();
+          newBoard.push(potentialRow);
+          findSolutions(newBoard);
         }
       }
     }
@@ -77,15 +74,8 @@ var bitwiseNQueens = function(n) {
 
   findSolutions([]);
 
+  console.log((new Date() - start) / 1000 )
+
   return solutionsCounter;
 
 };
-
-bitwiseNQueens(1);
-bitwiseNQueens(2);
-bitwiseNQueens(3);
-bitwiseNQueens(4);
-bitwiseNQueens(5);
-bitwiseNQueens(6);
-bitwiseNQueens(7);
-bitwiseNQueens(8);
